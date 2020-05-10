@@ -12,6 +12,10 @@ Flask api for differencing and returning captions.
 - raw_2
 - videos
 
+### Optional if using flaskenv
+
+navigate to the scripts folder and run .\activate
+
 ### run the app.py to start the Server
 
 #### Use python3 to run.

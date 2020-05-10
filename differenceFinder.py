@@ -5,6 +5,7 @@ import imutils
 import yaml
 import numpy as np
 from os.path import isfile, join
+import base64
 
 def findTheDifference(video1, video2, timestamp):
 
@@ -206,6 +207,22 @@ def findTheDifference(video1, video2, timestamp):
     fps = 1 / FRAME_RATE
     convert_frames_to_video(pathIn, pathOut, fps)
 
+    def convertToBase64String(imagePath): 
+        with open(imagePath, "rb") as img_file:
+            my_string = base64.b64encode(img_file.read())
+
+        print(len(my_string))
+        return str(my_string)[2:-1]
+    
+
+    VidOneMarkedDissimilarImageList = list()
+    VidTwoMarkedDissimilarImageList = list()
+    
+
+    for image in dissimilar_image_list:
+        VidOneMarkedDissimilarImageList.append(convertToBase64String(os.path.abspath('.')+'\\mark_1\\'+image))
+        VidTwoMarkedDissimilarImageList.append(convertToBase64String(os.path.abspath('.')+'\\mark_2\\'+image))
+
     result = {
         'status': 'success',
         'unique_timestamp': timestamp,
@@ -217,6 +234,8 @@ def findTheDifference(video1, video2, timestamp):
         'rawVideoTwoFramesPath': os.path.abspath('.')+'\\raw_2\\',
         'boxedFramesVideoOnePath': os.path.abspath('.')+'\\mark_1\\',
         'boxedFramesVideoTwoPath': os.path.abspath('.')+'\\mark_2\\',
+        'VidOneMarkedDissimilarImageList': VidOneMarkedDissimilarImageList,
+        'VidTwoMarkedDissimilarImageList': VidTwoMarkedDissimilarImageList
     }
 
     return result
